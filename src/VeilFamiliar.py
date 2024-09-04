@@ -40,13 +40,10 @@ class VeilFamiliar:
     def get_moves(self):
         return self.moveset
     
-    def get_all_strengths(self):
-        return self.primary_type.get_strengths() + self.secondary_type or self.secondary_type.get_strengths()
-
-
     def take_attack(self, attacker):
-        strengths = self.get_all_strengths()
-        print(strengths)
+        primary = self.primary_type.get_all()
+        secondary = self.secondary_type.get_all()
+        print(primary['strengths'] + secondary['strengths'])
 
     def report_status(self) -> str:
         pass
@@ -68,13 +65,10 @@ if __name__ == "__main__":
 
     # Define the primary type
     primary_type = VeilFamiliarType(
-        name="Water",
+        type_name="Water",
         weaknesses=["Fire", "Grass"],
-        weakness_modifier=1.5,
         strengths=["Water", "Ice"],
-        strength_modifier=0.5,
-        immunities=[],
-        description="A type of water-based Pokémon.",
+        immunities=[]
     )
 
     # Create the moves
@@ -101,21 +95,21 @@ if __name__ == "__main__":
         description="A powerful ice-based attack.",
         status_effects=["paralyzed"],
     )
-
+    # TODO: testing todo 
     # Create the moveset
     moveset = VeilFamiliarMoveset([water_gun, ice_beam])
 
     # Create the familiar
     veil_familiar = VeilFamiliar(
         given_name="Ned",
-        species_name="LilFyrMan",
+        species_name="Snozzwanger",
         is_frontline=True,
         level=10,
         base_stats=base_stats,
         primary_type=primary_type,
-        secondary_type=[],
+        secondary_type=VeilFamiliarType(),
         moveset=moveset,
-        description="A little fireman. His bark is bigger than his bite.",
+        description="Predator of the Oompa Loompas",
     )
 
     veil_familiar.take_attack(veil_familiar)
