@@ -43,7 +43,7 @@ class VeilFamiliar:
     def take_attack(self, attacker):
         primary = self.primary_type.get_all()
         secondary = self.secondary_type.get_all()
-        print(primary['strengths'] + secondary['strengths'])
+        print(primary['resistances'] + secondary['resistances'])
 
     def report_status(self) -> str:
         pass
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     primary_type = VeilFamiliarType(
         type_name="Water",
         weaknesses=["Fire", "Grass"],
-        strengths=["Water", "Ice"],
+        resistances=["Water", "Ice"],
         immunities=[]
     )
 
@@ -95,7 +95,7 @@ if __name__ == "__main__":
         description="A powerful ice-based attack.",
         status_effects=["paralyzed"],
     )
-    # TODO: testing todo 
+    
     # Create the moveset
     moveset = VeilFamiliarMoveset([water_gun, ice_beam])
 
