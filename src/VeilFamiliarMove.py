@@ -38,3 +38,9 @@ class VeilFamiliarMove:
 
     def get_status_effects(self) -> list:
         return self.status_effects
+    
+class VeiFamiliarMoveUtil:
+
+    @staticmethod
+    def calculate_first():
+        pass
