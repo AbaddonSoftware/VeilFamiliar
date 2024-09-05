@@ -60,10 +60,10 @@ if __name__ == "__main__":
         immunities=["Dragon"],
     )
 
-    result = VeilFamiliarMoveTypeCompare.battle_compare(defender, attacker, "Water")
+    result = VeilFamiliarMoveTypeCompare.battle_compare(defender, "Water")
     print(result)  # Should output 2, since Water is a weakness for Fire type
     temp = defender
     defender = attacker
     attacker = temp
-    result = VeilFamiliarMoveTypeCompare.battle_compare(defender, attacker, "Dragon")
+    result = VeilFamiliarMoveTypeCompare.battle_compare(defender, "Dragon")
     print(result)  # Should output 2, since Water is a weakness for Fire type

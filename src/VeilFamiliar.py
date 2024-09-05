@@ -43,7 +43,7 @@ class VeilFamiliar:
     def take_attack(self, attacker):
         primary = self.primary_type.get_all()
         secondary = self.secondary_type.get_all()
-        print(primary['resistances'] + secondary['resistances'])
+        print(list(set(primary['resistances'] + secondary['resistances'])))
 
     def report_status(self) -> str:
         pass
@@ -64,10 +64,17 @@ if __name__ == "__main__":
     )
 
     # Define the primary type
-    primary_type = VeilFamiliarType(
+    water_type = VeilFamiliarType(
         type_name="Water",
-        weaknesses=["Fire", "Grass"],
-        resistances=["Water", "Ice"],
+        weaknesses=["Electric", "Grass"],
+        resistances=["Fire", "Water", "Ice", "Steel"],
+        immunities=[]
+    )
+
+    fire_type = VeilFamiliarType(
+        type_name="Fire",
+        weaknesses=["Water", "Rock"],
+        resistances=["Fire", "Grass", "Ice", "Bug", "Steel", "Fairy"],
         immunities=[]
     )
 
@@ -100,16 +107,29 @@ if __name__ == "__main__":
     moveset = VeilFamiliarMoveset([water_gun, ice_beam])
 
     # Create the familiar
-    veil_familiar = VeilFamiliar(
+    snozzwanger = VeilFamiliar(
         given_name="Ned",
         species_name="Snozzwanger",
         is_frontline=True,
         level=10,
         base_stats=base_stats,
-        primary_type=primary_type,
+        primary_type=water_type,
         secondary_type=VeilFamiliarType(),
         moveset=moveset,
         description="Predator of the Oompa Loompas",
     )
 
-    veil_familiar.take_attack(veil_familiar)
+    vermicious_knid = VeilFamiliar(
+        given_name="Jed",
+        species_name="Vermicious Knid",
+        is_frontline=True,
+        level=10,
+        base_stats=base_stats,
+        primary_type=water_type,
+        secondary_type=fire_type,
+        moveset=moveset,
+        description="Predator of the Oompa Loompas",
+    )
+
+    vermicious_knid.take_attack(snozzwanger)
+
