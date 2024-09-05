@@ -26,19 +26,24 @@ class VeilFamiliarMoveTypeCompare:
 
     @staticmethod
     def battle_compare(
-        defender: VeilFamiliarType, attacker: VeilFamiliarType, move_type: str
+        defender: VeilFamiliarType, move_type: str
     ) -> float:
         effectiveness = defender.get_all()
         if move_type in effectiveness["immunities"]:
             return 0
         damage_mod = 1
-        if attacker.get_type_name() == move_type:
-            damage_mod = 1.5
         if move_type in effectiveness["weaknesses"]:
             return 2 * damage_mod
         if move_type in effectiveness["resistances"]:
             return 0.5 * damage_mod
         return 1 * damage_mod
+    
+    @staticmethod
+    def get_typeboost(attacker: VeilFamiliarType, move_type: str) -> float:
+            if attacker.get_type_name() == move_type:
+                return 1.5
+            return 1
+
 
 if __name__ == "__main__":
     # Test the battle_compare method
