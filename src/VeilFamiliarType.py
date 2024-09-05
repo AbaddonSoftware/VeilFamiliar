@@ -1,5 +1,3 @@
-
-
 class VeilFamiliarType:
     def __init__(
         self,
@@ -13,16 +11,54 @@ class VeilFamiliarType:
         self.resistances = resistances
         self.immunities = immunities
 
-
+    def get_type_name(self) -> str:
+        return self.type_name
+    
     def get_all(self) -> dict:
         return {
             "weaknesses": self.weaknesses,
             "resistances": self.resistances,
             "immunities": self.immunities,
         }
-
+    
 class VeilFamiliarMoveTypeCompare:
+    #TODO: Consider making this comparison case insensitive
 
     @staticmethod
-    def battle_compare(defender: VeilFamiliarType, attacker: VeilFamiliarType, move_type: str):
-        pass
+    def battle_compare(
+        defender: VeilFamiliarType, attacker: VeilFamiliarType, move_type: str
+    ) -> float:
+        effectiveness = defender.get_all()
+        if move_type in effectiveness["immunities"]:
+            return 0
+        damage_mod = 1
+        if attacker.get_type_name() == move_type:
+            damage_mod = 1.5
+        if move_type in effectiveness["weaknesses"]:
+            return 2 * damage_mod
+        if move_type in effectiveness["resistances"]:
+            return 0.5 * damage_mod
+        return 1 * damage_mod
+
+if __name__ == "__main__":
+    # Test the battle_compare method
+    defender = VeilFamiliarType(
+        type_name="Fire",
+        weaknesses=["Water", "Rock"],
+        resistances=["Fire", "Ice"],
+        immunities=["Dragon"],
+    )
+    attacker = VeilFamiliarType(
+        type_name="Water",
+        weaknesses=["Electric", "Grass"],
+        resistances=["Fire", "Water"],
+        immunities=["Dragon"],
+    )
+
+    result = VeilFamiliarMoveTypeCompare.battle_compare(defender, attacker, "Water")
+    print(result)  # Should output 2, since Water is a weakness for Fire type
+    temp = defender
+    defender = attacker
+    attacker = temp
+    result = VeilFamiliarMoveTypeCompare.battle_compare(defender, attacker, "Dragon")
+    print(result)  # Should output 2, since Water is a weakness for Fire type
