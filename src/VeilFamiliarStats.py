@@ -1,7 +1,7 @@
 class VeilFamiliarStats:
     def __init__(
         self,
-        health: int = 100, 
+        health: int = 100,
         attack: int = 100,
         special_attack: int = 100,
         defense: int = 100,
@@ -14,7 +14,7 @@ class VeilFamiliarStats:
         self.defense = defense
         self.special_defense = special_defense
         self.speed = speed
-    
+
     def get_health(self):
         return self.health
 

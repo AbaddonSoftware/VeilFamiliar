@@ -1,7 +1,16 @@
 class VeilFamiliarMove:
-    def __init__(self, name: str, power: int, power_points: int, accuracy: int, 
-                 priority: int, category: str, type: str, description: str, 
-                 status_effects=None):
+    def __init__(
+        self,
+        name: str,
+        power: int,
+        power_points: int,
+        accuracy: int,
+        priority: int,
+        category: str,
+        type: str,
+        description: str,
+        status_effects=None,
+    ):
         self.name = name
         self.power = power
         self.power_points = power_points
@@ -38,9 +47,9 @@ class VeilFamiliarMove:
 
     def get_status_effects(self) -> list:
         return self.status_effects
-    
-class VeiFamiliarMoveUtil:
 
+
+class VeiFamiliarMoveUtil:
     @staticmethod
     def calculate_first():
         pass

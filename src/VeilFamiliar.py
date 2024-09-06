@@ -39,11 +39,11 @@ class VeilFamiliar:
 
     def get_moves(self):
         return self.moveset
-    
+
     def take_attack(self, attacker):
         primary = self.primary_type.get_all()
         secondary = self.secondary_type.get_all()
-        print(list(set(primary['resistances'] + secondary['resistances'])))
+        print(list(set(primary["resistances"] + secondary["resistances"])))
 
     def report_status(self) -> str:
         pass
@@ -68,14 +68,14 @@ if __name__ == "__main__":
         type_name="Water",
         weaknesses=["Electric", "Grass"],
         resistances=["Fire", "Water", "Ice", "Steel"],
-        immunities=[]
+        immunities=[],
     )
 
     fire_type = VeilFamiliarType(
         type_name="Fire",
         weaknesses=["Water", "Rock"],
         resistances=["Fire", "Grass", "Ice", "Bug", "Steel", "Fairy"],
-        immunities=[]
+        immunities=[],
     )
 
     # Create the moves
@@ -102,7 +102,7 @@ if __name__ == "__main__":
         description="A powerful ice-based attack.",
         status_effects=["paralyzed"],
     )
-    
+
     # Create the moveset
     moveset = VeilFamiliarMoveset([water_gun, ice_beam])
 
@@ -132,4 +132,3 @@ if __name__ == "__main__":
     )
 
     vermicious_knid.take_attack(snozzwanger)
-

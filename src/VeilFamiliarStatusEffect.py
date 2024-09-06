@@ -1,5 +1,7 @@
 class VeilFamiliarStatusEffects:
-    def __init__(self, status_effect_name: str, inflicted_status: str, status_probability: int):
+    def __init__(
+        self, status_effect_name: str, inflicted_status: str, status_probability: int
+    ):
         self.status_effect_name = status_effect_name
         self.inflicted_status = inflicted_status
         self.status_probability = status_probability

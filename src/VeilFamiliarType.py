@@ -13,36 +13,36 @@ class VeilFamiliarType:
 
     def get_type_name(self) -> str:
         return self.type_name
-    
+
     def get_all(self) -> dict:
         return {
             "weaknesses": self.weaknesses,
             "resistances": self.resistances,
             "immunities": self.immunities,
         }
-    
-class VeilFamiliarMoveTypeCompare:
-    #TODO: Consider making this comparison case insensitive
+
+
+class VeilFamiliarTypeUtil:
+    # TODO: Consider making this comparison case insensitive
 
     @staticmethod
-    def battle_compare(
-        defender: VeilFamiliarType, move_type: str
-    ) -> float:
+    def battle_compare(defender: VeilFamiliarType, move_type: str) -> float:
         effectiveness = defender.get_all()
-        if move_type in effectiveness["immunities"]:
-            return 0
-        damage_mod = 1
-        if move_type in effectiveness["weaknesses"]:
-            return 2 * damage_mod
-        if move_type in effectiveness["resistances"]:
-            return 0.5 * damage_mod
-        return 1 * damage_mod
-    
+        damage_modifier = {
+            0: effectiveness["immunities"],
+            2: effectiveness["weaknesses"],
+            0.5: effectiveness["resistances"],
+        }
+        for damage_modifier, veilfamiliar_types in damage_modifier.items():
+            print(damage_modifier)
+            if move_type in veilfamiliar_types:
+                return damage_modifier
+        return 1
+
     @staticmethod
     def get_typeboost(attacker: VeilFamiliarType, move_type: str) -> float:
-            if attacker.get_type_name() == move_type:
-                return 1.5
-            return 1
+        is_typeboosted = attacker.get_type_name() == move_type
+        return 1.5 if is_typeboosted else 1
 
 
 if __name__ == "__main__":
@@ -60,10 +60,10 @@ if __name__ == "__main__":
         immunities=["Dragon"],
     )
 
-    result = VeilFamiliarMoveTypeCompare.battle_compare(defender, "Water")
-    print(result)  # Should output 2, since Water is a weakness for Fire type
+    result = VeilFamiliarTypeUtil.battle_compare(defender, "Water")
+    print(result)
     temp = defender
     defender = attacker
     attacker = temp
-    result = VeilFamiliarMoveTypeCompare.battle_compare(defender, "Dragon")
-    print(result)  # Should output 2, since Water is a weakness for Fire type
+    result = VeilFamiliarTypeUtil.battle_compare(defender, "Dragon")
+    print(result)
