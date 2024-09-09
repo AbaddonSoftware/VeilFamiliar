@@ -14,56 +14,26 @@ class VeilFamiliarType:
     def get_type_name(self) -> str:
         return self.type_name
 
-    def get_all(self) -> dict:
+    def get_effectiveness(self) -> dict:
         return {
             "weaknesses": self.weaknesses,
             "resistances": self.resistances,
             "immunities": self.immunities,
         }
 
-
-class VeilFamiliarTypeUtil:
-    # TODO: Consider making this comparison case insensitive
-
-    @staticmethod
-    def battle_compare(defender: VeilFamiliarType, move_type: str) -> float:
-        effectiveness = defender.get_all()
-        damage_modifier = {
-            0: effectiveness["immunities"],
-            2: effectiveness["weaknesses"],
-            0.5: effectiveness["resistances"],
-        }
-        for damage_modifier, veilfamiliar_types in damage_modifier.items():
-            print(damage_modifier)
-            if move_type in veilfamiliar_types:
-                return damage_modifier
-        return 1
-
-    @staticmethod
-    def get_typeboost(attacker: VeilFamiliarType, move_type: str) -> float:
-        is_typeboosted = attacker.get_type_name() == move_type
-        return 1.5 if is_typeboosted else 1
-
-
-if __name__ == "__main__":
-    # Test the battle_compare method
-    defender = VeilFamiliarType(
-        type_name="Fire",
-        weaknesses=["Water", "Rock"],
-        resistances=["Fire", "Ice"],
-        immunities=["Dragon"],
-    )
-    attacker = VeilFamiliarType(
-        type_name="Water",
-        weaknesses=["Electric", "Grass"],
-        resistances=["Fire", "Water"],
-        immunities=["Dragon"],
-    )
-
-    result = VeilFamiliarTypeUtil.battle_compare(defender, "Water")
-    print(result)
-    temp = defender
-    defender = attacker
-    attacker = temp
-    result = VeilFamiliarTypeUtil.battle_compare(defender, "Dragon")
-    print(result)
+    def __add__(self, other):
+        if isinstance(other, VeilFamiliarType):
+            return VeilFamiliarType(
+                type_name=f"{self.type_name} {other.type_name}",
+                weaknesses=self.weaknesses + other.weaknesses,
+                resistances=self.resistances + other.resistances,
+                immunities=self.immunities + other.immunities,
+            )
+        elif isinstance(other, None):
+            return self
+        else:
+            raise TypeError(
+                "Unsupported operand type(s) for +: 'VeilFamiliarType' and '{}'".format(
+                    type(other).__name__
+                )
+            )

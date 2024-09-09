@@ -2,6 +2,7 @@ from VeilFamiliarMove import VeilFamiliarMove
 from VeilFamiliarMoveset import VeilFamiliarMoveset
 from VeilFamiliarStats import VeilFamiliarStats
 from VeilFamiliarType import VeilFamiliarType
+from VeilFamiliarStatusEffect import VeilFamiliarStatusEffect
 
 
 class VeilFamiliar:
@@ -10,47 +11,43 @@ class VeilFamiliar:
         given_name: str,
         species_name: str,
         level: int,
-        base_stats: VeilFamiliarStats,
-        primary_type: VeilFamiliarType,
-        secondary_type: VeilFamiliarType,
-        moveset: VeilFamiliarMoveset,
+        stats: "VeilFamiliarStats",
+        primary_type: "VeilFamiliarType",
+        secondary_type: "VeilFamiliarType",
+        moveset: "VeilFamiliarMoveset",
         is_conscious: bool,
         is_frontline: bool,
         description: str,
-        status_list=None,
-        egg_group=None,
+        current_move: "VeilFamiliarMove",
+        status_list: "list[VeilFamiliarStatusEffect]" = None,
+        egg_group: list = None,
     ):
         self.given_name = given_name
         self.species_name = species_name
         self.level = level
-        self.base_stats = base_stats
+        self.stats = stats
         self.primary_type = primary_type
         self.secondary_type = secondary_type
         self.moveset = moveset
         self.is_conscious = is_conscious
         self.is_frontline = is_frontline
         self.description = description
+        self.current_move = current_move
         self.status_list = status_list if status_list is not None else []
         self.egg_group = egg_group if egg_group is not None else []
 
-    def get_given_name(self) -> str:
-        return self.given_name
-
-    def get_species_name(self) -> str:
-        return self.species_name
-
-    def get_moves(self):
+    def get_moveset(self):
         return self.moveset
 
     def take_damage(self, damage):
-        self.base_stats.health -= damage
-        self.base_stats.health = max(self.base_stats.health, 0)
+        self.stats.health -= damage
+        self.stats.health = max(self.base_stats.health, 0)
         self.is_conscious = self.base_stats.health > 0
 
-    def take_status(self, status_list):
-        self.status_list.extend(status_list)
+    def take_status(self, status_effect):
+        self.status_list.append(status_effect)
 
-    def report_status(self) -> str:
+    def check_status(self):
         pass
 
     def increase_level(self) -> None:
@@ -116,10 +113,11 @@ if __name__ == "__main__":
         given_name="Ned",
         species_name="Snozzwanger",
         is_frontline=True,
+        is_conscious=True,
         level=10,
         base_stats=base_stats,
         primary_type=water_type,
-        secondary_type=VeilFamiliarType(),
+        secondary_type=None,
         moveset=moveset,
         description="Predator of the Oompa Loompas",
     )
@@ -128,6 +126,7 @@ if __name__ == "__main__":
         given_name="Jed",
         species_name="Vermicious Knid",
         is_frontline=True,
+        is_conscious=True,
         level=10,
         base_stats=base_stats,
         primary_type=water_type,
@@ -136,4 +135,9 @@ if __name__ == "__main__":
         description="Predator of the Oompa Loompas",
     )
 
+    chosen_move = water_gun
     # TODO: Simulate a battle
+    # BattleUtils.battle_compare(vermicious_knid)
+    # BattleUtils.battle_calculate_damage(snozzwanger, chosen_move)
+    # snozzwanger.take_damage(50)
+    # print(snozzwanger.base_stats.health)  # Should print 50
