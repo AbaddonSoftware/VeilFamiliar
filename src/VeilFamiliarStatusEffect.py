@@ -1,4 +1,4 @@
-class VeilFamiliarStatusEffects:
+class VeilFamiliarStatusEffect:
     def __init__(
         self,
         status_effect_name: str,
