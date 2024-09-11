@@ -1,11 +1,3 @@
-from typing import Any
-from VeilFamiliarMove import VeilFamiliarMove
-from VeilFamiliarMoveset import VeilFamiliarMoveset
-from VeilFamiliarStats import VeilFamiliarStats
-from VeilFamiliarType import VeilFamiliarType
-from VeilFamiliarStatusEffect import VeilFamiliarStatusEffect
-
-
 class VeilFamiliar:
     def __init__(
         self,
@@ -20,7 +12,7 @@ class VeilFamiliar:
         is_frontline: bool,
         description: str,
         current_move: "VeilFamiliarMove",
-        status_list: "list[VeilFamiliarStatusEffect]" = None,
+        status_list: list["VeilFamiliarStatusEffect"] = None,  # if these don't persist after battle, this is probably unnecessary
         egg_group: list = None,
     ):
         self.given_name = given_name
@@ -52,15 +44,12 @@ class VeilFamiliar:
         pass
 
     def increase_level(self) -> None:
-        self.level += 1  # We will also include a check if a new move is learned or if "evolve?".
+        self.level += (
+            1  # We will also include a check if a new move is learned or if "evolve?".
+        )
 
     def __str__(self) -> str:
         return f"{self.given_name} the {self.species_name}"
-    
+
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}(given_name='{self.given_name}', species_name='{self.species_name}', level={self.level}, stats={self.stats}, primary_type={self.primary_type}, secondary_type={self.secondary_type}, moveset={self.moveset}, is_conscious={self.is_conscious}, is_frontline={self.is_frontline}, description='{self.description}', current_move={self.current_move}, status_list={self.status_list}, egg_group={self.egg_group})"
-    
-
-    
-
-

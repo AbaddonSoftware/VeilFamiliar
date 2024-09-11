@@ -3,9 +3,9 @@ from VeilFamiliarMove import VeilFamiliarMove
 from VeilFamiliarMoveset import VeilFamiliarMoveset
 from VeilFamiliarStats import VeilFamiliarStats
 from VeilFamiliarType import VeilFamiliarType
-from random import choice
+from random import randint, choice
 
-# some/all of these probably should be in classes already created.
+# some/all of these probably should be in classes (probably VeilFamiliar for most) already created.
 def battle_compare(defender: VeilFamiliar, attacker: VeilFamiliar) -> float:
     effectiveness = (
         defender.get_primary_type() + defender.get_secondary_type()
@@ -33,7 +33,8 @@ def get_typeboost(attacker: VeilFamiliar) -> float:
     )
     return 1.5 if is_typeboosted else 1
 
-def calculate_damage(attacker: VeilFamiliar, defender: VeilFamiliar) -> int:
+
+def calculate_damage(defender: VeilFamiliar, attacker: VeilFamiliar) -> int:
 
     pass
 
@@ -47,118 +48,6 @@ def calculate_order(
     if a != b:
         return [familiar_a, familiar_b] if a > b else [familiar_b, familiar_a]
 
-    return [familiar_a, familiar_b] if choice([True, False]) else [familiar_b, familiar_a]
-
-base_stats = VeilFamiliarStats(
-    health=100,
-    attack=88,
-    defense=77,
-    special_attack=92,
-    special_defense=93,
-    speed=87,
-)
-
-base_stats2 = VeilFamiliarStats(
-    health=100,
-    attack=88,
-    defense=77,
-    special_attack=92,
-    special_defense=93,
-    speed=99,
-)
-
-# Define the primary type
-water_type = VeilFamiliarType(
-    type_name="Water",
-    weaknesses=["Electric", "Grass"],
-    resistances=["Fire", "Water", "Ice", "Steel"],
-    immunities=[],
-)
-
-fire_type = VeilFamiliarType(
-    type_name="Fire",
-    weaknesses=["Water", "Rock"],
-    resistances=["Fire", "Grass", "Ice", "Bug", "Steel", "Fairy"],
-    immunities=[],
-)
-
-# Create the moves
-water_gun = VeilFamiliarMove(
-    name="Water Gun",
-    power=40,
-    power_points=35,
-    accuracy=100,
-    priority=0,
-    category="Special",
-    type="Water",
-    description="A powerful water-based attack.",
-    status_effects=[],
-)
-
-ice_beam = VeilFamiliarMove(
-    name="Ice Beam",
-    power=90,
-    power_points=15,
-    accuracy=100,
-    priority=2,
-    category="Physical",
-    type="Ice",
-    description="A powerful ice-based attack.",
-    status_effects=["paralyzed"],
-)
-
-# Create the moveset
-moveset = VeilFamiliarMoveset([water_gun, ice_beam])
-swift = VeilFamiliarMove(
-    name="Swift",
-    power=60,
-    power_points=20,
-    accuracy=100,
-    priority=2,
-    category="Physical",
-    type="Normal",
-    description="A swift, fast attack.",
-    status_effects=[],
-)
-
-
-# Create the familiar
-snozzwanger = VeilFamiliar(
-    given_name="Ned",
-    species_name="Snozzwanger",
-    is_frontline=True,
-    is_conscious=True,
-    level=10,
-    stats=base_stats,
-    primary_type=water_type,
-    current_move=swift,
-    secondary_type=None,
-    moveset=moveset,
-    description="Predator of the Oompa Loompas",
-)
-
-vermicious_knid = VeilFamiliar(
-    given_name="Jed",
-    species_name="Vermicious Knid",
-    is_frontline=True,
-    is_conscious=True,
-    level=10,
-    stats=base_stats2,
-    primary_type=water_type,
-    current_move=ice_beam,
-    secondary_type=fire_type,
-    moveset=moveset,
-    description="Predator of the Oompa Loompas",
-)
-
-output = calculate_order(snozzwanger, vermicious_knid)
-print([str(veilfamiliar) for veilfamiliar in output])
-print(output)
-
-
-# TODO: Simulate a battle
-# BattleUtils.battle_compare(vermicious_knid)
-# BattleUtils.battle_calculate_damage(snozzwanger, chosen_move)
-# snozzwanger.take_damage(50)
-# print(snozzwanger.base_stats.health)  # Should print 50
-
+    return (
+        [familiar_a, familiar_b] if choice([True, False]) else [familiar_b, familiar_a]
+    )
