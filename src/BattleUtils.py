@@ -1,9 +1,5 @@
 from VeilFamiliar import VeilFamiliar
-from VeilFamiliarMove import VeilFamiliarMove
-from VeilFamiliarMoveset import VeilFamiliarMoveset
-from VeilFamiliarStats import VeilFamiliarStats
-from VeilFamiliarType import VeilFamiliarType
-from random import randint, choice
+from random import choice
 
 # some/all of these probably should be in classes (probably VeilFamiliar for most) already created.
 def battle_compare(defender: VeilFamiliar, attacker: VeilFamiliar) -> float:
