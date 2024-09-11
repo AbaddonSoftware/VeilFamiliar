@@ -1,12 +1,13 @@
 from VeilFamiliar import VeilFamiliar
 from random import choice
 
+
 # some/all of these probably should be in classes (probably VeilFamiliar for most) already created.
 def battle_compare(defender: VeilFamiliar, attacker: VeilFamiliar) -> float:
     effectiveness = (
-        defender.get_primary_type() + defender.get_secondary_type()
+        defender.primary_type + defender.secondary_type
     ).get_effectiveness()
-    move_type = attacker.current_move().get_type()
+    move_type = attacker.current_move.type
 
     damage_modifier = {
         0: effectiveness["immunities"],
@@ -22,10 +23,12 @@ def battle_compare(defender: VeilFamiliar, attacker: VeilFamiliar) -> float:
 
 
 def get_typeboost(attacker: VeilFamiliar) -> float:
-    move_type = attacker.current_move.get_type()
+    move_type = attacker.current_move.type
     is_typeboosted = (
         attacker.primary_type.type_name == move_type
         or attacker.secondary_type.type_name == move_type
+        if attacker.secondary_type
+        else False
     )
     return 1.5 if is_typeboosted else 1
 

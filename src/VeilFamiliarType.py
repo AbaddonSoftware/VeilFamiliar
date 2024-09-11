@@ -29,7 +29,7 @@ class VeilFamiliarType:
                 resistances=self.resistances + other.resistances,
                 immunities=self.immunities + other.immunities,
             )
-        elif isinstance(other, None):
+        elif other is None:
             return self
         else:
             raise TypeError(
