@@ -1,0 +1,30 @@
+@startuml
+
+class VeilFamiliar {
+    - given_name: str
+    - species_name: str
+    - level: int
+    - stats: VeilFamiliarStats
+    - primary_type: VeilFamiliarType
+    - secondary_type: VeilFamiliarType
+    - moveset: VeilFamiliarMoveset
+    - is_conscious: bool
+    - description: str
+    - status_list: list<VeilFamiliarStatusEffect>
+    - egg_group: list
+    --
+    + get_moveset(): VeilFamiliarMoveset
+    + take_damage(damage: int): void
+    + take_status(status_effect: VeilFamiliarStatusEffect): void
+    + check_status(): void
+    + get_types(): list<str>
+    + increase_level(): void
+    + battle_compare(attacker: VeilFamiliar): float
+    + get_typeboost(): float
+    + calculate_damage(attacker: VeilFamiliar): int
+    + calculate_order(familiar_a: VeilFamiliar, familiar_b: VeilFamiliar): list<VeilFamiliar>
+    + __str__(): str
+    + __repr__(): str
+}
+
+@enduml

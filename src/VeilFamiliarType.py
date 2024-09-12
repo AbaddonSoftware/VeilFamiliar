@@ -20,6 +20,9 @@ class VeilFamiliarType:
             "resistances": self.resistances,
             "immunities": self.immunities,
         }
+    
+    def __str__(self):
+        return self.type_name
 
     def __add__(self, other):
         if isinstance(other, VeilFamiliarType):
@@ -29,8 +32,6 @@ class VeilFamiliarType:
                 resistances=self.resistances + other.resistances,
                 immunities=self.immunities + other.immunities,
             )
-        elif other is None:
-            return self
         else:
             raise TypeError(
                 "Unsupported operand type(s) for +: 'VeilFamiliarType' and '{}'".format(
