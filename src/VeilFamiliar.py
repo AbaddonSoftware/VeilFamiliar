@@ -87,9 +87,6 @@ class VeilFamiliar:
             if move_category == "Special"
             else attacker.stats.attack
         )
-        print(self.given_name, self.stats, "\n", attacker.given_name, attacker.stats, "\n", move_category, power_of_move, attacker_level)
-        print(self.calculate_effectiveness(attacker))
-        print(attacker.get_typeboost())
         return int(
             (
                 (((2 * attacker_level / 5 + 2) * attack * power_of_move / defense)
