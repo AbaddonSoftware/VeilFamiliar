@@ -53,7 +53,7 @@ class VeilFamiliar:
         return filter(None, (self.primary_type, self.secondary_type))
 
     def calculate_effectiveness(self, attacker: VeilFamiliar) -> float:
-        damage_values = [4, 2, 1, .5, .25]
+        damage_values = [4, 2, 1, 0.5, 0.25]
         move = attacker.moveset.selected_move
         types = self.get_types()
         resistant = 0
@@ -89,8 +89,7 @@ class VeilFamiliar:
         )
         return int(
             (
-                (((2 * attacker_level / 5 + 2) * attack * power_of_move / defense)
-                / 50)
+                (((2 * attacker_level / 5 + 2) * attack * power_of_move / defense) / 50)
                 + 2
             )
             * typeboost_modifier

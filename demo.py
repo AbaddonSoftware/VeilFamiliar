@@ -14,7 +14,7 @@ def main():
         special_attack=279,
         special_defense=250,
         speed=123,
-        level=91
+        level=91,
     )
 
     base_stats2 = VeilFamiliarStats(
@@ -24,37 +24,59 @@ def main():
         special_attack=119,
         special_defense=128,
         speed=163,
-        level=87
+        level=87,
     )
 
     water_type = VeilFamiliarType(
         type_name=EssenceType.WATER,
         weaknesses=[EssenceType.ELECTRIC, EssenceType.GRASS],
-        resistances=[EssenceType.FIRE, EssenceType.WATER, EssenceType.ICE, EssenceType.STEEL],
+        resistances=[
+            EssenceType.FIRE,
+            EssenceType.WATER,
+            EssenceType.ICE,
+            EssenceType.STEEL,
+        ],
         immunities=[],
     )
 
     grass_type = VeilFamiliarType(
         type_name=EssenceType.GRASS,
-        weaknesses=[EssenceType.FIRE, EssenceType.FLYING, EssenceType.POISON, EssenceType.BUG],
-        resistances=[EssenceType.WATER, EssenceType.ELECTRIC, EssenceType.GRASS, EssenceType.GROUND],
-        immunities=[]
+        weaknesses=[
+            EssenceType.FIRE,
+            EssenceType.FLYING,
+            EssenceType.POISON,
+            EssenceType.BUG,
+        ],
+        resistances=[
+            EssenceType.WATER,
+            EssenceType.ELECTRIC,
+            EssenceType.GRASS,
+            EssenceType.GROUND,
+        ],
+        immunities=[],
     )
 
     normal_type = VeilFamiliarType(
         type_name=EssenceType.NORMAL,
         weaknesses=[EssenceType.FIGHTING],
         resistances=[],
-        immunities=[]
+        immunities=[],
     )
 
     fire_type = VeilFamiliarType(
         type_name=EssenceType.FIRE,
         weaknesses=[EssenceType.WATER, EssenceType.ROCK],
-        resistances=[EssenceType.FIRE, EssenceType.GRASS, EssenceType.ICE, EssenceType.BUG, EssenceType.STEEL, EssenceType.FAIRY],
+        resistances=[
+            EssenceType.FIRE,
+            EssenceType.GRASS,
+            EssenceType.ICE,
+            EssenceType.BUG,
+            EssenceType.STEEL,
+            EssenceType.FAIRY,
+        ],
         immunities=[],
     )
-    
+
     # Create the moves
 
     energy_ball = VeilFamiliarMove(
@@ -106,7 +128,9 @@ def main():
         status_effects=[],
     )
 
-    moveset = VeilFamiliarMoveset([water_gun, ice_beam, swift], selected_move=energy_ball)
+    moveset = VeilFamiliarMoveset(
+        [water_gun, ice_beam, swift], selected_move=energy_ball
+    )
 
     # Create the familiar
     snozzwanger = VeilFamiliar(
@@ -134,8 +158,14 @@ def main():
     output = VeilFamiliar.calculate_order(snozzwanger, vermicious_knid)
     print(base_stats2, base_stats, sep="\n")
     print([str(veilfamiliar) for veilfamiliar in output])
-    print(snozzwanger.given_name, [str(type) for type in snozzwanger.get_types()], snozzwanger.moveset.selected_move.type_name, snozzwanger.get_typeboost())
+    print(
+        snozzwanger.given_name,
+        [str(type) for type in snozzwanger.get_types()],
+        snozzwanger.moveset.selected_move.type_name,
+        snozzwanger.get_typeboost(),
+    )
     print(snozzwanger.calculate_damage(vermicious_knid))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

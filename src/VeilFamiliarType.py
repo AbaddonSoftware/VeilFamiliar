@@ -34,5 +34,3 @@ class VeilFamiliarType:
 
     def __str__(self):
         return str(self.type_name)
-
-
