@@ -32,23 +32,7 @@ class VeilFamiliarType:
     def is_typeboosted_move(self, move: "VeilFamiliarMove"):
         return move.type_name == self.type_name
 
-    def get_type_name(self) -> str:
-        return self.type_name
-
     def __str__(self):
         return str(self.type_name)
 
-    def __add__(self, other):
-        if isinstance(other, VeilFamiliarType):
-            return VeilFamiliarType(
-                type_name=f"{self.type_name} {other.type_name}",
-                weaknesses=self.weaknesses + other.weaknesses,
-                resistances=self.resistances + other.resistances,
-                immunities=self.immunities + other.immunities,
-            )
-        else:
-            raise TypeError(
-                "Unsupported operand type(s) for +: 'VeilFamiliarType' and '{}'".format(
-                    type(other).__name__
-                )
-            )
+

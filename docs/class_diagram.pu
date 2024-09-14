@@ -1,30 +1,118 @@
 @startuml
 
+class EssenceType {
+    NORMAL
+    FIRE
+    WATER
+    ELECTRIC
+    GRASS
+    ICE
+    FIGHTING
+    POISON
+    GROUND
+    FLYING
+    PSYCHIC
+    BUG
+    ROCK
+    GHOST
+    DRAGON
+    DARK
+    STEEL
+    FAIRY
+    + str()
+}
+
 class VeilFamiliar {
     - given_name: str
     - species_name: str
-    - level: int
     - stats: VeilFamiliarStats
     - primary_type: VeilFamiliarType
     - secondary_type: VeilFamiliarType
     - moveset: VeilFamiliarMoveset
     - is_conscious: bool
     - description: str
-    - status_list: list<VeilFamiliarStatusEffect>
+    - status_effects: VeilFamiliarStatusEffects
     - egg_group: list
     --
-    + get_moveset(): VeilFamiliarMoveset
-    + take_damage(damage: int): void
-    + take_status(status_effect: VeilFamiliarStatusEffect): void
-    + check_status(): void
-    + get_types(): list<str>
-    + increase_level(): void
-    + battle_compare(attacker: VeilFamiliar): float
-    + get_typeboost(): float
-    + calculate_damage(attacker: VeilFamiliar): int
-    + calculate_order(familiar_a: VeilFamiliar, familiar_b: VeilFamiliar): list<VeilFamiliar>
-    + __str__(): str
-    + __repr__(): str
+    + get_moveset()
+    + take_damage(damage)
+    + take_status(status_effect)
+    + check_status()
+    + get_types()
+    + calculate_effectiveness(attacker: VeilFamiliar)
+    + get_typeboost()
+    + calculate_damage(attacker: VeilFamiliar)
+    + calculate_order(familiar_a: VeilFamiliar, familiar_b: VeilFamiliar)
 }
+
+class VeilFamiliarMove {
+    - name: str
+    - power: int
+    - power_points: int
+    - accuracy: int
+    - priority: int
+    - category: str
+    - type_name: EssenceType
+    - description: str
+    - status_effects: VeilFamiliarStatusEffects
+}
+
+class VeilFamiliarMoveset {
+    - moveset: list[VeilFamiliarMove]
+    - selected_move: VeilFamiliarMove
+    --
+    + add_move(moveset)
+    + add_moves(moveset: list)
+    + get_moves()
+    + set_selected(move: VeilFamiliarMove)
+}
+
+class VeilFamiliarStats {
+    - health: int
+    - attack: int
+    - special_attack: int
+    - defense: int
+    - special_defense: int
+    - speed: int
+    - friendship: int
+    - level: int
+}
+
+class VeilFamiliarStatusEffect {
+    - status_effect_name: str
+    - status_probability: int
+    - is_volatile: bool
+    - status_time: int
+    --
+    + get_status_effect_name()
+    + get_status_probability()
+    + get_status_time()
+}
+
+class VeilFamiliarStatusEffects {
+    - status_effects: list[VeilFamiliarStatusEffect]
+}
+
+class VeilFamiliarType {
+    - type_name: EssenceType
+    - weaknesses: list
+    - resistances: list
+    - immunities: list
+    --
+    + is_immune(move: VeilFamiliarMove)
+    + is_weak(move: VeilFamiliarMove)
+    + is_resistant(move: VeilFamiliarMove)
+    + is_typeboosted_move(move: VeilFamiliarMove)
+}
+
+VeilFamiliar "1" *-- "1" VeilFamiliarStats : "has"
+VeilFamiliar "1" *-- "1" VeilFamiliarType : "has"
+VeilFamiliar "1" *-- "1" VeilFamiliarMoveset : "has"
+VeilFamiliar "1" *-- "1" VeilFamiliarStatusEffects : "has"
+VeilFamiliarMoveset "1" *-- "1..4" VeilFamiliarMove : "contains"
+VeilFamiliarMove "1" *-- "1" EssenceType : "uses"
+VeilFamiliarMove "1" *-- "1" VeilFamiliarStatusEffects : "has"
+VeilFamiliarStatusEffects "1" *-- "Many" VeilFamiliarStatusEffect : "contains"
+VeilFamiliarType "1" *-- "1" EssenceType : "uses"
 
 @enduml
