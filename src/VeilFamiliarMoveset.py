@@ -21,8 +21,8 @@ class VeilFamiliarMoveset:
     
     def set_selected(self, move: VeilFamiliarMove):
         if move in self.moveset:
-            selected_move = move
-        selected_move = None
+            self.selected_move = move
+        self.selected_move = None
 
     
     
