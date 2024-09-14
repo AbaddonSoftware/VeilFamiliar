@@ -1,5 +1,10 @@
-# from VeilFamiliarStatusEffect import VeilFamiliarStatusEffect
-from typing import List
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .VeilFamiliarStatusEffects import VeilFamiliarStatusEffects
+    from .myTypes.EssenceTypes import EssenceType
 class VeilFamiliarMove:
     def __init__(
         self,
@@ -9,9 +14,9 @@ class VeilFamiliarMove:
         accuracy: int,
         priority: int,
         category: str,
-        type: str,
+        type_name: EssenceType,
         description: str,
-        status_effects: list['VeilFamiliarStatusEffect']
+        status_effects: VeilFamiliarStatusEffects
     ):
         self.name = name
         self.power = power
@@ -19,6 +24,6 @@ class VeilFamiliarMove:
         self.accuracy = accuracy
         self.priority = priority
         self.category = category
-        self.type = type
+        self.type_name = type_name
         self.description = description
         self.status_effects = status_effects
