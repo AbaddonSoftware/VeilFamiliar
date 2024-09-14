@@ -5,6 +5,8 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .VeilFamiliarStatusEffects import VeilFamiliarStatusEffects
     from .myTypes.EssenceTypes import EssenceType
+
+
 class VeilFamiliarMove:
     def __init__(
         self,
@@ -16,7 +18,7 @@ class VeilFamiliarMove:
         category: str,
         type_name: EssenceType,
         description: str,
-        status_effects: VeilFamiliarStatusEffects
+        status_effects: VeilFamiliarStatusEffects,
     ):
         self.name = name
         self.power = power

@@ -53,7 +53,7 @@ class VeilFamiliar:
         return filter(None, (self.primary_type, self.secondary_type))
 
     def calculate_effectiveness(self, attacker: VeilFamiliar) -> float:
-        damage_values = [.25, .5, 1, 2, 4]
+        damage_values = [0.25, 0.5, 1, 2, 4]
         move = attacker.moveset.selected_move
         types = self.get_types()
         resistant = 0
@@ -62,7 +62,6 @@ class VeilFamiliar:
             weak -= type.is_weak(move)
             resistant += type.is_resistant(move)
         return damage_values[(weak + resistant) + 2]
-
 
     def get_typeboost(self) -> float:
         move = self.moveset.selected_move
@@ -73,8 +72,30 @@ class VeilFamiliar:
         return 1
 
     def calculate_damage(self, attacker: VeilFamiliar) -> int:
-
-        pass
+        move_category = attacker.moveset.selected_move.category
+        power_of_move = attacker.moveset.selected_move.power
+        attacker_level = attacker.stats.level
+        effectiveness_modifier = self.calculate_effectiveness(attacker)
+        typeboost_modifier = self.get_typeboost()
+        defense = (
+            self.stats.special_defense
+            if move_category == "Special"
+            else self.stats.defense
+        )
+        attack = (
+            attacker.stats.special_attack
+            if move_category == "Special"
+            else attacker.stats.attack
+        )
+        return int(
+            (
+                (((2 * attacker_level / 5) + 2) * power_of_move * (attack / defense))
+                / 50
+                + 2
+            )
+            * typeboost_modifier
+            * effectiveness_modifier
+        )
 
     @staticmethod
     def calculate_order(

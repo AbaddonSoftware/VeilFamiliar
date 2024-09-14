@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class EssenceType(Enum):
     NORMAL = "Normal"
     FIRE = "Fire"
@@ -22,5 +23,3 @@ class EssenceType(Enum):
 
     def __str__(self):
         return f"{self.value}"
-    
-

@@ -8,7 +8,7 @@ class VeilFamiliarStats:
         special_defense: int = 100,
         speed: int = 100,
         friendship: int = 100,
-        level = 1
+        level=1,
     ):
         self.health = health
         self.attack = attack
@@ -20,12 +20,14 @@ class VeilFamiliarStats:
         self.level = level
 
     def __str__(self):
-        return (f"VeilFamiliarStats("
-                f"Health: {self.health}, "
-                f"Attack: {self.attack}, "
-                f"Special Attack: {self.special_attack}, "
-                f"Defense: {self.defense}, "
-                f"Special Defense: {self.special_defense}, "
-                f"Speed: {self.speed}, "
-                f"Friendship: {self.friendship}, "
-                f"Level: {self.level})")
+        return (
+            f"VeilFamiliarStats("
+            f"Health: {self.health}, "
+            f"Attack: {self.attack}, "
+            f"Special Attack: {self.special_attack}, "
+            f"Defense: {self.defense}, "
+            f"Special Defense: {self.special_defense}, "
+            f"Speed: {self.speed}, "
+            f"Friendship: {self.friendship}, "
+            f"Level: {self.level})"
+        )

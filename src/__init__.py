@@ -8,10 +8,10 @@ from .VeilFamiliarMoveset import VeilFamiliarMoveset
 # if somebody does "from somepackage import *", this is what they will
 # be able to access:
 __all__ = [
-    'VeilFamiliar',
-    'VeilFamiliarType',
-    'VeilFamiliarStats',
-    'VeilFamiliarStatusEffect',
-    'VeilFamiliarMove',
-    'VeilFamiliarMoveset',
+    "VeilFamiliar",
+    "VeilFamiliarType",
+    "VeilFamiliarStats",
+    "VeilFamiliarStatusEffect",
+    "VeilFamiliarMove",
+    "VeilFamiliarMoveset",
 ]
