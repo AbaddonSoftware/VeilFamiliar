@@ -40,7 +40,7 @@ def main():
     )
 
     grass_type = VeilFamiliarType(
-        type_name=EssenceType.GRASS,
+        type_name=EssenceType.ELECTRIC,
         weaknesses=[
             EssenceType.FIRE,
             EssenceType.FLYING,
@@ -86,7 +86,7 @@ def main():
         accuracy=100,
         priority=0,
         category="Special",
-        type_name=EssenceType.NORMAL,
+        type_name=EssenceType.ELECTRIC,
         description="A powerful water-based attack.",
         status_effects=[],
     )
@@ -165,7 +165,6 @@ def main():
         snozzwanger.get_typeboost(),
     )
     print(snozzwanger.calculate_damage(vermicious_knid))
-
-
+   
 if __name__ == "__main__":
     main()

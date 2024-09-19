@@ -29,3 +29,6 @@ class VeilFamiliarMove:
         self.type_name = type_name
         self.description = description
         self.status_effects = status_effects
+
+    def __str__(self):
+            return self.name

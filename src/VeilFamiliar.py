@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -33,6 +34,9 @@ class VeilFamiliar:
         self.description = description
         self.status_effects = status_effects
         self.egg_group = egg_group if egg_group is not None else []
+
+    def __str__(self) -> str:
+        return f"{self.given_name}, the {self.species_name}"
 
     def get_moveset(self):
         return self.moveset
@@ -75,6 +79,13 @@ class VeilFamiliar:
         move_category = attacker.moveset.selected_move.category
         power_of_move = attacker.moveset.selected_move.power
         attacker_level = attacker.stats.level
+        print(
+            str(attacker.moveset.selected_move),
+            [str(type) for type in attacker.get_types()],
+            move_category,
+            power_of_move,
+            attacker_level,
+        )
         effectiveness_modifier = self.calculate_effectiveness(attacker)
         typeboost_modifier = attacker.get_typeboost()
         defense = (
@@ -87,14 +98,24 @@ class VeilFamiliar:
             if move_category == "Special"
             else attacker.stats.attack
         )
-        return int(
-            (
-                (((2 * attacker_level / 5 + 2) * attack * power_of_move / defense) / 50)
-                + 2
-            )
+
+        return round(
+            ((((2 * attacker_level / 5 + 2) * attack) * power_of_move / defense) / 50)
             * typeboost_modifier
             * effectiveness_modifier
         )
+
+    def take_damage(self, damage):
+        self.stats.health -= damage
+        self.stats.health = max(self.stats.health, 0)
+        self.is_conscious = self.stats.health > 0
+
+    def take_status(self, status_effect):
+        self.status_effects.append(status_effect)
+
+    def check_status(self):
+        # Implement status effect checking logic here
+        pass
 
     @staticmethod
     def calculate_order(
@@ -112,6 +133,3 @@ class VeilFamiliar:
             if choice([True, False])
             else [familiar_b, familiar_a]
         )
-
-    def __str__(self) -> str:
-        return f"{self.given_name}, the {self.species_name}"
