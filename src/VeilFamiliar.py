@@ -75,19 +75,10 @@ class VeilFamiliar:
                 return 1.5
         return 1
 
-    def calculate_damage(self, attacker: VeilFamiliar) -> int:
+    def calculate_base_damage(self, attacker: VeilFamiliar) -> float:
         move_category = attacker.moveset.selected_move.category
         power_of_move = attacker.moveset.selected_move.power
         attacker_level = attacker.stats.level
-        print(
-            str(attacker.moveset.selected_move),
-            [str(type) for type in attacker.get_types()],
-            move_category,
-            power_of_move,
-            attacker_level,
-        )
-        effectiveness_modifier = self.calculate_effectiveness(attacker)
-        typeboost_modifier = attacker.get_typeboost()
         defense = (
             self.stats.special_defense
             if move_category == "Special"
@@ -98,12 +89,7 @@ class VeilFamiliar:
             if move_category == "Special"
             else attacker.stats.attack
         )
-
-        return round(
-            ((((2 * attacker_level / 5 + 2) * attack) * power_of_move / defense) / 50)
-            * typeboost_modifier
-            * effectiveness_modifier
-        )
+        return ((((2 * attacker_level / 5 + 2) * attack) * power_of_move / defense) / 50)
 
     def take_damage(self, damage):
         self.stats.health -= damage
@@ -117,15 +103,14 @@ class VeilFamiliar:
         # Implement status effect checking logic here
         pass
 
+    #This will need be written to handle a list of VeilFamiliars so as to accomodate more possibilities for combat initiative
     @staticmethod
     def calculate_order(
         familiar_a: VeilFamiliar, familiar_b: VeilFamiliar
     ) -> list[VeilFamiliar]:  # This belongs in BattleArena Code.
         from random import choice
-
-        upper = 10000
-        a = familiar_a.moveset.selected_move.priority * upper + familiar_a.stats.speed
-        b = familiar_b.moveset.selected_move.priority * upper + familiar_b.stats.speed
+        a = (familiar_a.moveset.selected_move.priority << 15) + familiar_a.stats.speed
+        b = (familiar_b.moveset.selected_move.priority << 15) + familiar_b.stats.speed
         if a != b:
             return [familiar_a, familiar_b] if a > b else [familiar_b, familiar_a]
         return (

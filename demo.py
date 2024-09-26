@@ -1,3 +1,5 @@
+from random import randint
+
 from src.VeilFamiliar import VeilFamiliar
 from src.VeilFamiliarMove import VeilFamiliarMove
 from src.VeilFamiliarMoveset import VeilFamiliarMoveset
@@ -164,7 +166,10 @@ def main():
         snozzwanger.moveset.selected_move.type_name,
         snozzwanger.get_typeboost(),
     )
-    print(snozzwanger.calculate_damage(vermicious_knid))
+    type_boost_value = vermicious_knid.get_typeboost()
+    effectiveness = snozzwanger.calculate_effectiveness(vermicious_knid)
+    print(type_boost_value, effectiveness)
+    print(snozzwanger.calculate_base_damage(vermicious_knid))
    
 if __name__ == "__main__":
     main()
