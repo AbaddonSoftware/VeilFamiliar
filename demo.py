@@ -164,12 +164,11 @@ def main():
         snozzwanger.given_name,
         [str(type) for type in snozzwanger.get_types()],
         snozzwanger.moveset.selected_move.type_name,
-        snozzwanger.get_typeboost(),
+        snozzwanger.calculate_typeboost(),
     )
-    type_boost_value = vermicious_knid.get_typeboost()
+    type_boost_value = vermicious_knid.calculate_typeboost()
     effectiveness = snozzwanger.calculate_effectiveness(vermicious_knid)
     print(type_boost_value, effectiveness)
     print(snozzwanger.calculate_base_damage(vermicious_knid))
-   
 if __name__ == "__main__":
     main()

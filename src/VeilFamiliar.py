@@ -67,7 +67,7 @@ class VeilFamiliar:
             resistant += type.is_resistant(move)
         return damage_values[(weak + resistant) + 2]
 
-    def get_typeboost(self) -> float:
+    def calculate_typeboost(self) -> float:
         move = self.moveset.selected_move
         types = self.get_types()
         for type in types:
@@ -89,7 +89,7 @@ class VeilFamiliar:
             if move_category == "Special"
             else attacker.stats.attack
         )
-        return ((((2 * attacker_level / 5 + 2) * attack) * power_of_move / defense) / 50)
+        return (((2 * attacker_level / 5 + 2) * attack * power_of_move / defense) / 50)
 
     def take_damage(self, damage):
         self.stats.health -= damage
