@@ -170,5 +170,13 @@ def main():
     effectiveness = snozzwanger.calculate_effectiveness(vermicious_knid)
     print(type_boost_value, effectiveness)
     print(snozzwanger.calculate_base_damage(vermicious_knid))
+    damages = []
+    for i in range(0, 16):
+        damages.append(snozzwanger.calculate_final_damage(i, vermicious_knid))
+    damage_text = ", ".join(str(damage) for damage in damages)
+    print(damage_text)
+    print(snozzwanger.calculate_final_damage(15, vermicious_knid))
+
+
 if __name__ == "__main__":
     main()

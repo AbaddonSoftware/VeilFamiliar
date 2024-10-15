@@ -38,6 +38,12 @@ class VeilFamiliar:
     def __str__(self) -> str:
         return f"{self.given_name}, the {self.species_name}"
 
+    @staticmethod
+    def _special_round(number):
+        if number % 1 > 0.5:
+            return int(number + 1)
+        return int(number)
+
     def get_moveset(self):
         return self.moveset
 
@@ -67,15 +73,15 @@ class VeilFamiliar:
             resistant += type.is_resistant(move)
         return damage_values[(weak + resistant) + 2]
 
-    def calculate_typeboost(self) -> float:
+    def calculate_typeboost(self) -> int:
         move = self.moveset.selected_move
         types = self.get_types()
         for type in types:
             if type.is_typeboosted_move(move):
-                return 1.5
-        return 1
+                return 4096 + 2048
+        return 4096
 
-    def calculate_base_damage(self, attacker: VeilFamiliar) -> float:
+    def calculate_base_damage(self, attacker: VeilFamiliar) -> int:
         move_category = attacker.moveset.selected_move.category
         power_of_move = attacker.moveset.selected_move.power
         attacker_level = attacker.stats.level
@@ -89,7 +95,23 @@ class VeilFamiliar:
             if move_category == "Special"
             else attacker.stats.attack
         )
-        return (((2 * attacker_level / 5 + 2) * attack * power_of_move / defense) / 50)
+        damage = self._special_round(
+            ((2 * attacker_level / 5 + 2) * power_of_move * attack / defense) / 50
+        )
+        return damage
+
+    def calculate_final_damage(self, random_value: int, attacker: VeilFamiliar) -> int:
+        offset32 = 0xFFFFFFFF
+        typeboost = attacker.calculate_typeboost()
+        effectiveness = self.calculate_effectiveness(attacker)
+        base_damage = self.calculate_base_damage(attacker)
+        final_damage = int(base_damage * (85 + random_value) / 100) & offset32
+        if typeboost != 4096:
+            final_damage = (
+                int(self._special_round((final_damage * typeboost) / 4096)) & offset32
+            )
+        final_damage = int(final_damage * effectiveness) & offset32
+        return final_damage
 
     def take_damage(self, damage):
         self.stats.health -= damage
@@ -103,12 +125,13 @@ class VeilFamiliar:
         # Implement status effect checking logic here
         pass
 
-    #This will need be written to handle a list of VeilFamiliars so as to accomodate more possibilities for combat initiative
+    # TODO This will need be written to handle a list of VeilFamiliars so as to accomodate more possibilities for combat initiative
     @staticmethod
     def calculate_order(
         familiar_a: VeilFamiliar, familiar_b: VeilFamiliar
     ) -> list[VeilFamiliar]:  # This belongs in BattleArena Code.
         from random import choice
+
         a = (familiar_a.moveset.selected_move.priority << 15) + familiar_a.stats.speed
         b = (familiar_b.moveset.selected_move.priority << 15) + familiar_b.stats.speed
         if a != b:

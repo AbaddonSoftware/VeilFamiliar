@@ -19,6 +19,7 @@ class EssenceType {
     DARK
     STEEL
     FAIRY
+    --
     + str()
 }
 
@@ -39,10 +40,11 @@ class VeilFamiliar {
     + take_status(status_effect)
     + check_status()
     + get_types()
-    + calculate_effectiveness(attacker: VeilFamiliar)
-    + get_typeboost()
-    + calculate_damage(attacker: VeilFamiliar)
-    + calculate_order(familiar_a: VeilFamiliar, familiar_b: VeilFamiliar)
+    + calculate_effectiveness(attacker: VeilFamiliar): int
+    + calculate_typeboost(): float
+    + calculate_base_damage(attacker: VeilFamiliar): float
+    + calculate_final_damage(attacker: VeilFamiliar): int
+    + calculate_order(list[VeilFamiliar]): list[VeilFamiliar]
 }
 
 class VeilFamiliarMove {
