@@ -39,8 +39,8 @@ class VeilFamiliar:
         return f"{self.given_name}, the {self.species_name}"
 
     @staticmethod
-    def _special_round(number):
-        if number % 1 > 0.5:
+    def _unusual_round(number):
+        if number - int(number) > 0.5:
             return int(number + 1)
         return int(number)
 
@@ -95,7 +95,7 @@ class VeilFamiliar:
             if move_category == "Special"
             else attacker.stats.attack
         )
-        damage = self._special_round(
+        damage = self._unusual_round(
             ((2 * attacker_level / 5 + 2) * power_of_move * attack / defense) / 50
         )
         return damage
@@ -108,7 +108,7 @@ class VeilFamiliar:
         final_damage = int(base_damage * (85 + random_value) / 100) & offset32
         if typeboost != 4096:
             final_damage = (
-                int(self._special_round((final_damage * typeboost) / 4096)) & offset32
+                int(self._unusual_round((final_damage * typeboost) / 4096)) & offset32
             )
         final_damage = int(final_damage * effectiveness) & offset32
         return final_damage
@@ -126,10 +126,11 @@ class VeilFamiliar:
         pass
 
     # TODO This will need be written to handle a list of VeilFamiliars so as to accomodate more possibilities for combat initiative
+    # This belongs in BattleArena Code.
     @staticmethod
     def calculate_order(
         familiar_a: VeilFamiliar, familiar_b: VeilFamiliar
-    ) -> list[VeilFamiliar]:  # This belongs in BattleArena Code.
+    ) -> list[VeilFamiliar]:  
         from random import choice
 
         a = (familiar_a.moveset.selected_move.priority << 15) + familiar_a.stats.speed
