@@ -34,6 +34,7 @@ class VeilFamiliar:
         self.description = description
         self.status_effects = status_effects
         self.egg_group = egg_group if egg_group is not None else []
+        self._offset32 = 0xFFFFFFFF
 
     def __str__(self) -> str:
         return f"{self.given_name}, the {self.species_name}"
@@ -73,15 +74,16 @@ class VeilFamiliar:
             resistant += type.is_resistant(move)
         return damage_values[(weak + resistant) + 2]
 
-    def calculate_typeboost(self) -> int:
+    def calculate_typeboost(self) -> float:
         move = self.moveset.selected_move
         types = self.get_types()
         for type in types:
             if type.is_typeboosted_move(move):
-                return 4096 + 2048
-        return 4096
+                return 1.5
+        return 1
 
     def calculate_base_damage(self, attacker: VeilFamiliar) -> int:
+        offset32 = self._offset32
         move_category = attacker.moveset.selected_move.category
         power_of_move = attacker.moveset.selected_move.power
         attacker_level = attacker.stats.level
@@ -95,21 +97,18 @@ class VeilFamiliar:
             if move_category == "Special"
             else attacker.stats.attack
         )
-        damage = self._unusual_round(
-            ((2 * attacker_level / 5 + 2) * power_of_move * attack / defense) / 50
-        )
+        damage = int(2 * attacker_level / 5 + 2) & offset32
+        damage = int(damage * power_of_move * attack / defense) & offset32
+        damage = self._unusual_round(damage / 50 + 2)
         return damage
 
     def calculate_final_damage(self, random_value: int, attacker: VeilFamiliar) -> int:
-        offset32 = 0xFFFFFFFF
+        offset32 = self._offset32
         typeboost = attacker.calculate_typeboost()
         effectiveness = self.calculate_effectiveness(attacker)
         base_damage = self.calculate_base_damage(attacker)
         final_damage = int(base_damage * (85 + random_value) / 100) & offset32
-        if typeboost != 4096:
-            final_damage = (
-                int(self._unusual_round((final_damage * typeboost) / 4096)) & offset32
-            )
+        final_damage = int(self._unusual_round(final_damage * typeboost)) & offset32
         final_damage = int(final_damage * effectiveness) & offset32
         return final_damage
 
