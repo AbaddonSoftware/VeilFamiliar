@@ -1,13 +1,13 @@
 class VeilFamiliarStats:
     def __init__(
         self,
-        health: int = 100,
-        attack: int = 100,
-        special_attack: int = 100,
-        defense: int = 100,
-        special_defense: int = 100,
-        speed: int = 100,
-        friendship: int = 100,
+        health: int = 1,
+        attack: int = 1,
+        special_attack: int = 1,
+        defense: int = 1,
+        special_defense: int = 1,
+        speed: int = 1,
+        friendship: int = 1,
         level=1,
     ):
         self.health = health

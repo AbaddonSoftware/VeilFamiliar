@@ -9,10 +9,12 @@ if TYPE_CHECKING:
 class VeilFamiliarMoveset:
     def __init__(
         self,
-        moveset: list["VeilFamiliarMove"] = None,
-        selected_move: "VeilFamiliarMove" = None,
+        moves_known: list[VeilFamiliarMove] = [],
+        moveset: list[VeilFamiliarMove] = [],
+        selected_move: VeilFamiliarMove = None,
     ):
-        self.moveset = moveset if moveset is not None else []
+        self.moves_known = moves_known
+        self.moveset = moveset
         self.selected_move = selected_move
 
     def add_move(self, moveset):

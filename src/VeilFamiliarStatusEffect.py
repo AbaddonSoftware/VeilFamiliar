@@ -1,10 +1,10 @@
 class VeilFamiliarStatusEffect:
     def __init__(
         self,
-        status_effect_name: str,
-        status_probability: int,
-        is_volatile: bool,
-        status_time: int,
+        status_effect_name: str = "poison",
+        status_probability: int = 250,
+        is_volatile: bool = False,
+        status_time: int = 1,
     ):
         self._status_effect_name = status_effect_name
         self._status_probability = status_probability

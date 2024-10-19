@@ -44,7 +44,6 @@ class VeilFamiliar:
     @staticmethod
     def _unusual_round(number):
         return int(number) + (number - int(number) > 0.5)
-        
 
     def get_moveset(self):
         return self.moveset
@@ -106,8 +105,12 @@ class VeilFamiliar:
         typeboost = attacker.calculate_typeboost()
         effectiveness = self.calculate_effectiveness(attacker)
         base_damage = self.calculate_base_damage(attacker)
-        final_damage = int(base_damage * (85 + random_value) / 100) & VeilFamiliar.OFFSET32
-        final_damage = int(self._unusual_round(final_damage * typeboost)) & VeilFamiliar.OFFSET32
+        final_damage = (
+            int(base_damage * (85 + random_value) / 100) & VeilFamiliar.OFFSET32
+        )
+        final_damage = (
+            int(self._unusual_round(final_damage * typeboost)) & VeilFamiliar.OFFSET32
+        )
         final_damage = int(final_damage * effectiveness) & VeilFamiliar.OFFSET16
         return final_damage
 
@@ -128,7 +131,7 @@ class VeilFamiliar:
     @staticmethod
     def calculate_order(
         familiar_a: VeilFamiliar, familiar_b: VeilFamiliar
-    ) -> list[VeilFamiliar]:  
+    ) -> list[VeilFamiliar]:
         from random import choice
 
         a = (familiar_a.moveset.selected_move.priority << 15) + familiar_a.stats.speed
