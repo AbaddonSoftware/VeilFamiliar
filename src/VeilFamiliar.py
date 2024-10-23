@@ -11,8 +11,6 @@ if TYPE_CHECKING:
 
 
 class VeilFamiliar:
-    OFFSET32 = 0xFFFFFFFF
-    OFFSET16 = 0xFFFF
 
     def __init__(
         self,
@@ -42,8 +40,25 @@ class VeilFamiliar:
         return f"{self.given_name}, the {self.species_name}"
 
     @staticmethod
-    def _unusual_round(number):
-        return int(number) + (number - int(number) > 0.5)
+    def _simple_gb_round(number) -> int:
+        """
+        simple_gb_round(number: float) -> int
+
+        This rounds down on values .5 and below
+        rounds up on values higher than .5
+
+        It's a carry over from the way Game Freak
+        handled gameboy division and rounding
+        """
+        return int(number) + (number - int(number) > 0.5) & 0xFFFFFFFF
+
+    @staticmethod
+    def _offset32(number) -> int:
+        return int(number) & 0xFFFFFFFF
+
+    @staticmethod
+    def _offset16(number) -> int:
+        return int(number) & 0xFFFF
 
     def get_moveset(self):
         return self.moveset
@@ -96,23 +111,19 @@ class VeilFamiliar:
             if move_category == "Special"
             else attacker.stats.attack
         )
-        damage = int(2 * attacker_level / 5 + 2) & VeilFamiliar.OFFSET32
-        damage = int(damage * power_of_move * attack / defense) & VeilFamiliar.OFFSET32
-        damage = int(damage / 50 + 2)
+        damage = self._offset32(2 * attacker_level / 5 + 2)
+        damage = self._offset32(damage * power_of_move * attack / defense)
+        damage = self._offset32(damage / 50 + 2)
         return damage
 
     def calculate_final_damage(self, random_value: int, attacker: VeilFamiliar) -> int:
         typeboost = attacker.calculate_typeboost()
         effectiveness = self.calculate_effectiveness(attacker)
         base_damage = self.calculate_base_damage(attacker)
-        final_damage = (
-            int(base_damage * (85 + random_value) / 100) & VeilFamiliar.OFFSET32
-        )
-        final_damage = (
-            int(self._unusual_round(final_damage * typeboost)) & VeilFamiliar.OFFSET32
-        )
-        final_damage = int(final_damage * effectiveness) & VeilFamiliar.OFFSET16
-        return final_damage
+        final_damage = self._offset32(base_damage * (85 + random_value) / 100)
+        final_damage = self._simple_gb_round(final_damage * typeboost)
+        final_damage = self._offset32(final_damage * effectiveness)
+        return self._offset16(final_damage)
 
     def take_damage(self, damage):
         self.stats.health -= damage
