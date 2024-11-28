@@ -20,16 +20,16 @@ class VeilFamiliarType:
         self.resistances = resistances
         self.immunities = immunities
 
-    def is_immune(self, move: "VeilFamiliarMove") -> bool:
+    def is_immune(self, move: VeilFamiliarMove) -> bool:
         return move.type_name in self.immunities
 
-    def is_weak(self, move: "VeilFamiliarMove") -> bool:
+    def is_weak(self, move: VeilFamiliarMove) -> bool:
         return move.type_name in self.weaknesses
 
-    def is_resistant(self, move: "VeilFamiliarMove") -> bool:
+    def is_resistant(self, move: VeilFamiliarMove) -> bool:
         return move.type_name in self.resistances
 
-    def is_typeboosted_move(self, move: "VeilFamiliarMove"):
+    def is_typeboosted_move(self, move: VeilFamiliarMove):
         return move.type_name == self.type_name
 
     def __str__(self):
